@@ -1,0 +1,112 @@
+CREATE TABLE `test`.`customers`(  
+  `CustomerNumber` INT(10) NOT NULL,
+  `CustomerName` VARCHAR(40) NOT NULL,
+  `contactLastName` VARCHAR(40) NOT NULL,
+  `contactFirstName` VARCHAR(40) NOT NULL,
+  `phone` VARCHAR(30) NOT NULL,
+  `address1` VARCHAR(40) NOT NULL,
+  `address2` VARCHAR(40),
+  `city` VARCHAR(40) NOT NULL,
+  `state` VARCHAR(50) NOT NULL,
+  `postalcode` INT(20) NOT NULL,
+  `country` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`CustomerNumber`)
+) ENGINE=INNODB CHARSET=latin7 COLLATE=latin7_general_cs;
+
+
+CREATE TABLE `test`.`TimeCheck`(  
+  `Start_Date` DATETIME NOT NULL,
+  `End_Date` DATETIME NOT NULL
+);
+
+INSERT INTO test.`TimeCheck` VALUES(SYSDATE(),NOW());
+
+SHOW CREATE TABLE test.`Orders`
+
+ALTER TABLE test.`Orders`
+ADD FOREIGN KEY fk_customer(customerNumber)
+REFERENCES customer(customerNumber)
+
+CREATE TABLE `orders` (                                                                                                                                                                                                                                                                                                                                                                                               
+          `orderNumber` int(20) NOT NULL,                                                                                                                                                                                                                                                                                                                                                           
+          `orderDate` date NOT NULL,                                                                                                                                                                                                                                                                                                                                                                                               
+          `requiredDate` date NOT NULL,                                                                                                                                                                                                                                                                                                                                                                                            
+          `shippedDate` date NOT NULL,                                                                                                                                                                                                                                                                                                                                                                                             
+          `status` tinyint(1) NOT NULL,                                                                                                                                                                                                                                                                                                                                                                                            
+          `comments` longtext COLLATE latin7_general_cs,                                                                                                                                                                                                                                                                                                                                                                           
+          `customerNumber` int(20) DEFAULT NULL,                                                                                                                                                                                                                                                                                                                                                                                   
+          PRIMARY KEY (`orderNumber`),                                                                                                                                                                                                                                                                                                                                                                                             
+          KEY `customerNumber` (`customerNumber`)                                                                                                                                                                                                                                                                                                                                                                                  
+        ) ENGINE=InnoDB DEFAULT CHARSET=latin7 COLLATE=latin7_general_cs 
+
+TIMESTAMP is four bytes vs eight bytes for DATETIME. Timestamps are also lighter on the database and indexed faster. The DATETIME type is used when you need values
+ that contain both date and time information. MySQL retrieves and displays DATETIME values in 'YYYY-MM-DD HH:MM:SS' format.
+
+The DATE type is used for values with a date part but no time part. MySQL retrieves and displays DATE values in 'YYYY-MM-DD' format. The supported range is '1000-01-01' to '9999-12-31'.
+The DATETIME type is used for values that contain both date and time parts. MySQL retrieves and displays DATETIME values in 'YYYY-MM-DD HH:MM:SS' format. The supported range is '1000-01-01 00:00:00' to '9999-12-31 23:59:59'.
+
+The TIMESTAMP data type is used for values that contain both date and time parts. TIMESTAMP has a range of '1970-01-01 00:00:01' UTC to '2038-01-19 03:14:07' UTC.
+
+
+CREATE TABLE test( dob DATE);
+ 
+INSERT INTO test VALUES ( '2016-10-27')
+ 
+SELECT * FROM test;
+
+Different ways of creating foreign keys
+
+CREATE TABLE Orders
+(
+O_Id int NOT NULL,
+OrderNo int NOT NULL,
+P_Id int,
+PRIMARY KEY (O_Id),
+FOREIGN KEY (P_Id) REFERENCES Persons(P_Id)
+)
+
+CREATE TABLE Orders
+(
+O_Id int NOT NULL,
+OrderNo int NOT NULL,
+P_Id int,
+PRIMARY KEY (O_Id),
+CONSTRAINT fk_PerOrders FOREIGN KEY (P_Id)
+REFERENCES Persons(P_Id)
+)
+
+DATATYPES(Integer)
+
+tinyint: 1 byte, -128 to +127 / 0 to 255 (unsigned)
+smallint: 2 bytes, -32,768 to +32,767 / 0 to 65,535 (unsigned)
+mediumint: 3 bytes, -8,388,608 to 8,388,607 / 0 to 16,777,215 (unsigned)
+int/integer: 4 bytes, -2,147,483,648 to +2,147,483,647 / 0 to 4,294,967,295 (unsigned)
+bigint: 8 bytes, -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 / 0 to 18,446,744,073,709,551,615 (unsigned)
+
+INNERJOIN
+SELECT customerName,phone,address1,orders.customerNumber FROM test.`customers` 
+INNER JOIN test.`orders` ON customers.`CustomerNumber`=orders.`customerNumber`;
+
+
+SELECT * FROM test.`customers`,test.`orders`
+
+Multiple table joins
+SELECT test.`customers`.`CustomerName`,test.`products`.`prod_name`,test.`orders`.`orderDate` FROM
+customers ,products ,orders 
+WHERE test.`customers`.`CustomerNumber`=test.`orders`.`customerNumber` AND
+test.`orders`.`orderNumber`=test.`products`.`orderNumber`
+
+
+Multiple Inserts into a table
+
+INSERT INTO test.`products`(prod_id,prod_name,orderNumber,customerNumber)
+VALUES(12,'Panasonic',230,201),(13,'LG',231,202),(14,'Hitachi',232,203)
+
+INSERT INTO test.`orders`(orderNumber,orderDate,requiredDate,shippedDate,STATUS,comments,customerNumber)
+VALUES(230,'2016-12-06','2016-12-08','2016-12-07',1,'Good Product',201),(231,'2016-12-01','2016-12-08','2016-12-07',1,'Good Product',202),
+(232,'2016-12-02','2016-12-08','2016-12-07',1,'Good Product',203)
+
+INSERT INTO test.`customers`(CustomerNumber,CustomerName,contactLastName,contactFirstName,phone,address1,address2,city,state,
+postalcode,country)VALUES(201,'Jack','Sparrow','Jack','180567345','boulevard','park avenue','LakeView','NJ',100,'USA'),
+(202,'Lesley','Jones','Lesley','130987345','Lveback','lakeside','NYC','CA',101,'USA'),(203,'Landy','Pamela','Landy','12089454',
+'Vinston','Reado','Riveria','Carson',102,'USA')

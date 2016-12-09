@@ -1,0 +1,29 @@
+https://qa2.revature.com/core/-----admin login
+http://www.yopmail.com/en/---test student login
+https://eclipse.org/downloads/packages/release/Neon/1A
+http://docs.sonarqube.org/display/PLUG/Custom+Rules+for+Java
+squid:S1166 rule
+squid:S1854 rule---Dead stores removed.
+https://jananivblog.wordpress.com/
+esakkip@revature.com
+RCS146---Employee id
+
+roopesh@revature.com
+
+ophilia@revature.com
+
+https://learningteam.atlassian.net
+username: sairam
+password:pass123
+
+Ctrl+Shift+F----formatter
+
+ https://app.revature.com/core
+
+https://github.com/codetamil/sql/upload/master
+
+sqlshortyblog.wordpress.com
+
+msyqlforeignkeys.wordpress.com
+
+http://pdf.th7.cn/down/files/1312/Oracle%20SQL%20Recipes.pdf
